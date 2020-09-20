@@ -2,6 +2,11 @@
   "name": "react-mobx-mvvm",
   "version": "0.1.0",
   "private": true,
+  "author": "Benjamin Mordukhovich",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d400800/react-mobx-mvvm.git"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
