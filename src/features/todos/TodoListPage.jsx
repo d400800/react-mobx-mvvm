@@ -1,8 +1,8 @@
 import React from 'react';
 
+import TodoListStore, {useTodoListStore} from "./stores/todo-list";
 import {TodoList} from "./TodoList";
 import {TodoNew} from "./TodoNew";
-import TodoListStore, {useTodoListStore} from "./stores/todo-list";
 
 function TodoListPage() {
     const InitialTodoListStore = new TodoListStore([

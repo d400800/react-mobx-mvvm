@@ -1,8 +1,10 @@
-import React from 'react';
-import {TodoItem} from "./TodoItem";
 import {useObserver} from "mobx-react-lite";
+import React from 'react';
+
 import {Box, Typography} from "@material-ui/core";
+
 import {useTodoListStore} from "./stores/todo-list";
+import {TodoItem} from "./TodoItem";
 
 export const TodoList = () => {
     const {StoreContext: todoList} = useTodoListStore();

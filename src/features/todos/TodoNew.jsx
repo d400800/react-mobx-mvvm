@@ -9,7 +9,7 @@ class TodoNewVm extends ViewModel {
     static getDefaultUiData() {
         return {
             name: 'test'
-        }
+        };
     }
 }
 
@@ -24,7 +24,7 @@ export const TodoNew = () => {
 
         todoNewVm.updateUiData({
             name: ''
-        })
+        });
     };
 
     return (
@@ -42,5 +42,5 @@ export const TodoNew = () => {
                 <Button variant="contained" color="primary" onClick={addTodo}>Add Todo</Button>
             </Box>
         )
-    )
+    );
 };
