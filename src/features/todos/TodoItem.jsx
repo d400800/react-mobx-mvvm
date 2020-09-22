@@ -1,11 +1,12 @@
+import {observer} from "mobx-react";
 import React from 'react';
 
-import { observer } from "mobx-react"
 import {Box, Typography, TextField, Button, Checkbox, IconButton} from "@material-ui/core";
-import useViewModel from "../../shared/hooks/use-view-model";
+import AdjustIcon from "@material-ui/icons/Adjust";
 import EditIcon from "@material-ui/icons/Edit";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import AdjustIcon from "@material-ui/icons/Adjust";
+
+import useViewModel from "../../shared/hooks/use-view-model";
 
 const TodoItem = observer(({todo, todosUiStore}) => {
     const todoUiStore = useViewModel(todo);
@@ -13,17 +14,16 @@ const TodoItem = observer(({todo, todosUiStore}) => {
     return (
         <>
             {
-                todo.uiData.isEditing
-                    ?
+                todo.uiData.isEditing ?
                     <Box display="flex" alignItems="center">
                         <Box mr={2}>
+                                
                             <TextField value={todoUiStore.data.text} variant="outlined" size="small"
-                                       onChange={e => todoUiStore.updateData({text: e.target.value})}
+                                       onChange={e => todoUiStore.updateText(e.target.value)}
                             />
 
                             <Button variant="contained" color="primary"
-                                    onClick={() => todoUiStore.toggleIsEditing()}
-                            >
+                                    onClick={() => todoUiStore.toggleIsEditing()}>
                                 save
                             </Button>
                         </Box>
@@ -34,19 +34,19 @@ const TodoItem = observer(({todo, todosUiStore}) => {
                             color="primary"
                             checked={todoUiStore.data.isDone}
                             onChange={() => todoUiStore.toggleIsDone()}
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            inputProps={{'aria-label': 'secondary checkbox'}}
                         />
-
+    
                         <Typography variant="body1">{todoUiStore.data.text}</Typography>
-
+    
                         <IconButton onClick={() => todoUiStore.toggleIsEditing()}>
                             <EditIcon/>
                         </IconButton>
-
+    
                         <IconButton onClick={() => todosUiStore.removeTodo(todo)}>
                             <HighlightOffIcon/>
                         </IconButton>
-
+    
                         <IconButton onClick={() => todosUiStore.selectTodo(todo)}>
                             <AdjustIcon/>
                         </IconButton>

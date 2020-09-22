@@ -1,4 +1,4 @@
-import UiStore from "../../../shared/models/UiStore";
+import UiStore from "../../../shared/models/ui-store";
 import {action, decorate} from "mobx";
 
 export default class TodoUiStore extends UiStore {

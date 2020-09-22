@@ -1,13 +1,13 @@
-import ObservableModel from "./ObservableModel";
+import {observable, decorate} from "mobx";
 
 export default class UiStore {
     constructor({data, uiData} = {}) {
-        this.data = new ObservableModel(data);
+        this.data = data;
 
-        this.uiData = new ObservableModel({
+        this.uiData = {
             ...this.constructor.getDefaultUiData(),
             ...uiData
-        });
+        };
     }
 
     updateUiData(uiData) {
@@ -24,10 +24,15 @@ export default class UiStore {
 
     update(data, uiData) {
         this.updateData(data);
-        this.updateUiData(uiData)
+        this.updateUiData(uiData);
     }
 
     static getDefaultUiData() {
         return {};
     }
 }
+
+decorate(UiStore, {
+    data: observable,
+    uiData: observable
+});

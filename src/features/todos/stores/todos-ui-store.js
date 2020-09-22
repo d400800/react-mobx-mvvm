@@ -1,14 +1,15 @@
-import {action, computed, observable, decorate} from "mobx";
-import UiStore from "../../../shared/models/UiStore";
+import {action, computed,  decorate} from "mobx";
+
+import UiStore from "../../../shared/models/ui-store";
 
 export default class TodosUiStore extends UiStore {
     addTodo(todo) {
         this.data.todos.push(todo);
-    };
+    }
 
     removeTodo(todo) {
         this.data.todos.remove(todo);
-    };
+    }
 
     selectTodo(todo) {
         this.uiData.selectedTodo = todo;
@@ -29,7 +30,7 @@ export default class TodosUiStore extends UiStore {
     static getDefaultUiData() {
         return {
             selectedTodo: null
-        }
+        };
     }
 }
 

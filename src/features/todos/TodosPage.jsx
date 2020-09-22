@@ -1,8 +1,8 @@
 import React from 'react';
 
-import TodosUiStore from './stores/todos-ui-store';
-import TodoUiStore from './stores/todo-ui-store';
 import AddTodo from "./AddTodo";
+import TodoUiStore from './stores/todo-ui-store';
+import TodosUiStore from './stores/todos-ui-store';
 import TodosList from "./TodosList";
 
 export default function TodosPage() {
