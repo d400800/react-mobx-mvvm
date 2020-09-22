@@ -3,11 +3,11 @@ import React from 'react';
 
 import {Box, Typography} from "@material-ui/core";
 
-import {useTodoListStore} from "./stores/todo-list";
+import {useStore} from "../../shared/hooks/use-store";
 import {TodoItem} from "./TodoItem";
 
 export const TodoList = () => {
-    const {StoreContext: todoList} = useTodoListStore();
+    const {StoreContext: todoList} = useStore();
 
     return useObserver(() => (
         <>

@@ -16,7 +16,9 @@ export default class ViewModel {
         }
     }
 
-    updateData = (data) => {
+    updateData(data) {
+        console.log(this);
+
         for (const key in data) {
             this.data[key] = data[key];
         }

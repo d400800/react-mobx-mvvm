@@ -4,12 +4,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AdjustIcon from '@material-ui/icons/Adjust';
 import EditIcon from '@material-ui/icons/Edit';
 import {useObserver} from "mobx-react-lite";
-import {useTodoListStore} from './stores/todo-list';
+import {useStore} from '../../shared/hooks/use-store';
 import ViewModel from "../../shared/models/ViewModel";
 import useViewModel from "../../shared/hooks/use-view-model";
 
 export const TodoItem = ({todo}) => {
-    const {StoreContext: todoList} = useTodoListStore();
+    const {StoreContext: todoList} = useStore();
 
     return (
         useObserver(() => (

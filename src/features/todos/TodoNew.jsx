@@ -1,6 +1,6 @@
 import React from "react";
 import {TextField, Box, Button} from "@material-ui/core";
-import {useTodoListStore} from "./stores/todo-list";
+import {useStore} from "../../shared/hooks/use-store";
 import {useObserver} from "mobx-react-lite";
 import ViewModel from "../../shared/models/ViewModel";
 import useViewModel from "../../shared/hooks/use-view-model";
@@ -14,7 +14,7 @@ class TodoNewVm extends ViewModel {
 }
 
 export const TodoNew = () => {
-    const {StoreContext: todoList} = useTodoListStore();
+    const {StoreContext: todoList} = useStore();
     const todoNewVm = useViewModel(new TodoNewVm());
 
     const addTodo = () => {

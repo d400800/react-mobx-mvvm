@@ -1,8 +1,9 @@
 import React from 'react';
 
-import TodoListStore, {useTodoListStore} from "./stores/todo-list";
+import TodoListStore from "./stores/todo-list";
 import {TodoList} from "./TodoList";
 import {TodoNew} from "./TodoNew";
+import {useStore} from '../../shared/hooks/use-store';
 
 function TodoListPage() {
     const InitialTodoListStore = new TodoListStore([
@@ -18,7 +19,7 @@ function TodoListPage() {
         }
     ]);
 
-    const {StoreProvider: TodoListStoreProvider} = useTodoListStore();
+    const {StoreProvider: TodoListStoreProvider} = useStore();
 
     return (
         <>
