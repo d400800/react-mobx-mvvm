@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 export default function useViewModel(initialViewModelState) {
-    const [viewModel] = useState(initialViewModelState);
+    const [UiStore] = useState(initialViewModelState);
 
-    return viewModel;
+    return UiStore;
 }

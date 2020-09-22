@@ -1,7 +1,7 @@
 import {action, computed, observable, decorate} from "mobx";
-import ViewModel from "../../../shared/models/ViewModel";
+import UiStore from "../../../shared/models/UiStore";
 
-export default class TodosUiStore extends ViewModel {
+export default class TodosUiStore extends UiStore {
     addTodo(todo) {
         this.data.todos.push(todo);
     };
@@ -15,11 +15,15 @@ export default class TodosUiStore extends ViewModel {
     }
 
     get finishedTodos() {
-        return this.todos.filter(todo => todo.data.isDone);
+        return this.data.todos.filter(todo => todo.data.isDone);
     }
 
     get openTodos() {
-        return this.todos.filter(todo => !todo.data.isDone);
+        return this.data.todos.filter(todo => !todo.data.isDone);
+    }
+
+    getTodos() {
+        return this.data.todos;
     }
 
     static getDefaultUiData() {

@@ -1,7 +1,7 @@
-import ViewModel from "../../../shared/models/ViewModel";
+import UiStore from "../../../shared/models/UiStore";
 import {action, decorate} from "mobx";
 
-export default class TodoUiStore extends ViewModel {
+export default class TodoUiStore extends UiStore {
     static getDefaultUiData() {
         return {
             isEditing: false

@@ -1,6 +1,6 @@
 import ObservableModel from "./ObservableModel";
 
-export default class ViewModel {
+export default class UiStore {
     constructor({data, uiData} = {}) {
         this.data = new ObservableModel(data);
 
@@ -10,21 +10,19 @@ export default class ViewModel {
         });
     }
 
-    updateUiData = (uiData) => {
+    updateUiData(uiData) {
         for (const key in uiData) {
             this.uiData[key] = uiData[key];
         }
     }
 
     updateData(data) {
-        console.log(this);
-
         for (const key in data) {
             this.data[key] = data[key];
         }
     }
 
-    update = (data, uiData) => {
+    update(data, uiData) {
         this.updateData(data);
         this.updateUiData(uiData)
     }

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import TodosController from './TodosController';
 import TodosUiStore from './stores/todos-ui-store';
 import TodoUiStore from './stores/todo-ui-store';
+import AddTodo from "./AddTodo";
+import TodosList from "./TodosList";
 
 export default function TodosPage() {
     const todosUiStore = new TodosUiStore({
@@ -24,7 +25,9 @@ export default function TodosPage() {
 
     return (
         <>
-            <TodosController todosUiStore={todosUiStore}/>
+            <AddTodo todosUiStore={todosUiStore}/>
+
+            <TodosList todosUiStore={todosUiStore} />
         </>
     );
 }

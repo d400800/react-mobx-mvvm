@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from "mobx-react"
 import {Box, Typography, TextField, Button} from "@material-ui/core";
 import useViewModel from "../../shared/hooks/use-view-model";
-import ViewModel from "../../shared/models/ViewModel";
+import UiStore from "../../shared/models/UiStore";
 import TodoUiStore from "./stores/todo-ui-store";
 
 const AddTodo = observer(({todosUiStore}) => {
@@ -15,7 +15,7 @@ const AddTodo = observer(({todosUiStore}) => {
         addTodoUiStore.updateData({text: ''})
     }
 
-    const addTodoUiStore = useViewModel(new ViewModel({data: {text: ''}}));
+    const addTodoUiStore = useViewModel(new UiStore({data: {text: ''}}));
 
     return (
         <>

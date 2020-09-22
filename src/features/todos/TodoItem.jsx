@@ -1,76 +1,60 @@
 import React from 'react';
-import {Button, Box, Typography, Checkbox, IconButton, TextField} from "@material-ui/core";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import AdjustIcon from '@material-ui/icons/Adjust';
-import EditIcon from '@material-ui/icons/Edit';
-import {useObserver} from "mobx-react-lite";
-import {useStore} from '../../shared/hooks/use-store';
-import ViewModel from "../../shared/models/ViewModel";
-import useViewModel from "../../shared/hooks/use-view-model";
 
-export const TodoItem = ({todo}) => {
-    const {StoreContext: todoList} = useStore();
+import { observer } from "mobx-react"
+import {Box, Typography, TextField, Button, Checkbox, IconButton} from "@material-ui/core";
+import useViewModel from "../../shared/hooks/use-view-model";
+import EditIcon from "@material-ui/icons/Edit";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import AdjustIcon from "@material-ui/icons/Adjust";
+
+const TodoItem = observer(({todo, todosUiStore}) => {
+    const todoUiStore = useViewModel(todo);
 
     return (
-        useObserver(() => (
-            <>
-                {
-                    todo.uiData.isEditing
-                        ?
-                        <Box display="flex" alignItems="center">
-                            <Box mr={2}>
-                                <TodoText onSave={todo.update}
-                                          todoText={todo.data.text}/>
-                            </Box>
-                        </Box>
-                        :
-                        <Box display="flex" alignItems="center">
-                            <Checkbox
-                                color="primary"
-                                defaultChecked={todo.data.isDone}
-                                onChange={todo.toggleIsDone}
-                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+        <>
+            {
+                todo.uiData.isEditing
+                    ?
+                    <Box display="flex" alignItems="center">
+                        <Box mr={2}>
+                            <TextField value={todoUiStore.data.text} variant="outlined" size="small"
+                                       onChange={e => todoUiStore.updateData({text: e.target.value})}
                             />
 
-                            <Typography variant="body1">{todo.data.text}</Typography>
-
-                            <IconButton onClick={() => todo.updateUiData({isEditing: true})}>
-                                <EditIcon/>
-                            </IconButton>
-
-                            <IconButton onClick={() => todoList.removeTodo(todo)}>
-                                <HighlightOffIcon/>
-                            </IconButton>
-
-                            <IconButton onClick={() => todoList.selectedTodo = todo}>
-                                <AdjustIcon/>
-                            </IconButton>
+                            <Button variant="contained" color="primary"
+                                    onClick={() => todoUiStore.toggleIsEditing()}
+                            >
+                                save
+                            </Button>
                         </Box>
-                }
-                <Typography variant={"caption"}>{JSON.stringify(todo)}</Typography>
-            </>
-        ))
-    )
-};
+                    </Box>
+                    :
+                    <Box display="flex" alignItems="center">
+                        <Checkbox
+                            color="primary"
+                            checked={todoUiStore.data.isDone}
+                            onChange={() => todoUiStore.toggleIsDone()}
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
 
-function TodoText({todoText, onSave}) {
-    const todoTextVm = useViewModel(new ViewModel({
-        data: {text: todoText}
-    }));
+                        <Typography variant="body1">{todoUiStore.data.text}</Typography>
 
-    return (
-        useObserver(() => (
-            <>
-                <TextField value={todoTextVm.data.text} variant="outlined" size="small"
-                           onChange={e => todoTextVm.updateData({text: e.target.value})}
-                />
+                        <IconButton onClick={() => todoUiStore.toggleIsEditing()}>
+                            <EditIcon/>
+                        </IconButton>
 
-                <Button variant="contained" color="primary"
-                        onClick={() => onSave({text: todoTextVm.data.text}, {isEditing: false})}
-                >
-                    save
-                </Button>
-            </>
-        ))
+                        <IconButton onClick={() => todosUiStore.removeTodo(todo)}>
+                            <HighlightOffIcon/>
+                        </IconButton>
+
+                        <IconButton onClick={() => todosUiStore.selectTodo(todo)}>
+                            <AdjustIcon/>
+                        </IconButton>
+                    </Box>
+            }
+            <Typography variant={"caption"}>{JSON.stringify(todo)}</Typography>
+        </>
     );
-}
+});
+
+export default TodoItem;
