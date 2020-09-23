@@ -1,11 +1,18 @@
 import {action, computed,  decorate} from "mobx";
 
 import UiStore from "../../../shared/models/ui-store";
-import mockTodosProvider from "../../../shared/test-provider";
 
 export default class TodosUiStore extends UiStore {
-    async loadTodos() {
-        const response = await mockTodosProvider();
+    constructor({data, uiData, deps}) {
+        super({data, uiData});
+
+        this.resource = deps.resource;
+        this.initialQuery = deps.initialQuery;
+
+        this.loadTodos(this.initialQuery);
+    }
+    async loadTodos(query) {
+        const response = await this.resource(query);
         
         this.data.todos = response.data;
     }

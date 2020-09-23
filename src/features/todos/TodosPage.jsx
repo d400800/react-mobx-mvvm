@@ -10,30 +10,13 @@ import AddTodo from "./AddTodo";
 import TodosUiStore from './stores/todos-ui-store';
 import TodosList from "./TodosList";
 
-const TodosProvider = () => {
-    const [todos, setTodos] = React.useState();
-    
-    React.useEffect(() => {
-        async function loadTodos() {
-            const response = await mockTodosProvider();
-
-            setTodos(response.data);
+const TodosPage = observer(() => {
+    const todosUiStore = useViewModel(new TodosUiStore({
+        deps: {
+            resource: mockTodosProvider,
+            initialQuery: {ids: [1,2,3]}
         }
-
-        loadTodos();
-    }, []);
-    
-    if (!todos) {
-        return <Typography variant={"body1"}>Loading...</Typography>;
-    }
-    
-    return (
-        <TodosPage todos={todos} />
-    );
-};
-
-const TodosPage = observer(({todos}) => {
-    const todosUiStore = useViewModel(new TodosUiStore({data: {todos}}));
+    }));
 
     return (
         <>
@@ -79,4 +62,4 @@ const TodosPage = observer(({todos}) => {
     );
 });
 
-export default TodosProvider;
+export default TodosPage;
