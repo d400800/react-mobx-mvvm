@@ -1,14 +1,22 @@
 import {action, computed,  decorate} from "mobx";
 
 import UiStore from "../../../shared/models/ui-store";
+import mockTodosProvider from "../../../shared/test-provider";
 
 export default class TodosUiStore extends UiStore {
+    async loadTodos() {
+        const response = await mockTodosProvider();
+        
+        this.data.todos = response.data;
+    }
+
     addTodo(todo) {
         this.data.todos.push(todo);
     }
 
     removeTodo(todo) {
         this.data.todos.remove(todo);
+        this.closeAlertDialog();
     }
 
     selectTodo(todo) {
@@ -23,13 +31,22 @@ export default class TodosUiStore extends UiStore {
         return this.data.todos.filter(todo => !todo.data.isDone);
     }
 
-    getTodos() {
-        return this.data.todos;
+    closeAlertDialog() {
+        this.updateUiData({
+            alertDialog: {
+                open: false,
+                todo: null
+            }
+        });
     }
 
     static getDefaultUiData() {
         return {
-            selectedTodo: null
+            selectedTodo: null,
+            alertDialog: {
+                open: false,
+                todo: null
+            }
         };
     }
 }

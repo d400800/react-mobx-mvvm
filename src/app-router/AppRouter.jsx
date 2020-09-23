@@ -5,18 +5,18 @@ import {
     Route
 } from "react-router-dom";
 
-import TodosPage from "../features/todos/TodosPage";
+import TodosProvider from "../features/todos/TodosPage";
 
 export default function AppRouter() {
     return (
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <TodosPage />
+                    <TodosProvider />
                 </Route>
 
                 <Route exact path="/todo-list-page">
-                    <TodosPage />
+                    <TodosProvider />
                 </Route>
             </Switch>
         </Router>

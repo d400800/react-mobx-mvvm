@@ -17,7 +17,6 @@ const TodoItem = observer(({todo, todosUiStore}) => {
                 todo.uiData.isEditing ?
                     <Box display="flex" alignItems="center">
                         <Box mr={2}>
-                                
                             <TextField value={todoUiStore.data.text} variant="outlined" size="small"
                                        onChange={e => todoUiStore.updateText(e.target.value)}
                             />
@@ -43,7 +42,12 @@ const TodoItem = observer(({todo, todosUiStore}) => {
                             <EditIcon/>
                         </IconButton>
     
-                        <IconButton onClick={() => todosUiStore.removeTodo(todo)}>
+                        <IconButton onClick={() => todosUiStore.updateUiData({
+                            alertDialog: {
+                                open: true,
+                                todo
+                            }
+                        })}>
                             <HighlightOffIcon/>
                         </IconButton>
     

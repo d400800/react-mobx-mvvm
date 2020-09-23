@@ -1,11 +1,12 @@
-import UiStore from "../../../shared/models/ui-store";
 import {action, decorate} from "mobx";
+
+import UiStore from "../../../shared/models/ui-store";
 
 export default class TodoUiStore extends UiStore {
     static getDefaultUiData() {
         return {
             isEditing: false
-        }
+        };
     }
 
     toggleIsDone() {

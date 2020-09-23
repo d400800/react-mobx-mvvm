@@ -2,7 +2,10 @@ import {observable, decorate} from "mobx";
 
 export default class UiStore {
     constructor({data, uiData} = {}) {
-        this.data = data;
+        this.data = {
+            ...this.constructor.getDefaultData(),
+            ...data
+        };
 
         this.uiData = {
             ...this.constructor.getDefaultUiData(),
@@ -29,6 +32,12 @@ export default class UiStore {
 
     static getDefaultUiData() {
         return {};
+    }
+
+    static getDefaultData() {
+        return {
+            todos: []
+        };
     }
 }
 
