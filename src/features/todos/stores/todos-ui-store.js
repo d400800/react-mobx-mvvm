@@ -1,4 +1,4 @@
-import {action, computed,  decorate} from "mobx";
+import {action, computed, makeObservable} from "mobx";
 
 import UiStore from "../../../shared/models/ui-store";
 
@@ -10,7 +10,15 @@ export default class TodosUiStore extends UiStore {
         this.initialQuery = deps.initialQuery;
 
         this.loadTodos(this.initialQuery);
+
+        makeObservable(this, {
+            addTodo: action,
+            removeTodo: action,
+            finishedTodos: computed,
+            openTodos: computed
+        });
     }
+
     async loadTodos(query) {
         const response = await this.resource(query);
         
@@ -57,10 +65,3 @@ export default class TodosUiStore extends UiStore {
         };
     }
 }
-
-decorate(TodosUiStore, {
-    addTodo: action,
-    removeTodo: action,
-    finishedTodos: computed,
-    openTodos: computed
-});

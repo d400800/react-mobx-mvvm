@@ -1,4 +1,4 @@
-import {observable, decorate} from "mobx";
+import {observable, makeObservable} from "mobx";
 
 export default class UiStore {
     constructor({data, uiData} = {}) {
@@ -11,6 +11,11 @@ export default class UiStore {
             ...this.constructor.getDefaultUiData(),
             ...uiData
         };
+
+        makeObservable(this, {
+            data: observable,
+            uiData: observable
+        });
     }
 
     updateUiData(uiData) {
@@ -40,8 +45,3 @@ export default class UiStore {
         };
     }
 }
-
-decorate(UiStore, {
-    data: observable,
-    uiData: observable
-});

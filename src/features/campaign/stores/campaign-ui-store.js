@@ -1,18 +1,8 @@
-import {action, makeObservable} from "mobx";
+import {action, decorate} from "mobx";
 
 import UiStore from "../../../shared/models/ui-store";
 
 export default class TodoUiStore extends UiStore {
-    constructor({data, uiData}) {
-        super({data, uiData});
-
-        makeObservable(this, {
-            toggleIsDone: action,
-            toggleIsEditing: action,
-            updateText: action
-        });
-    }
-    
     static getDefaultUiData() {
         return {
             isEditing: false
@@ -31,3 +21,9 @@ export default class TodoUiStore extends UiStore {
         this.data.text = text;
     }
 }
+
+decorate(TodoUiStore, {
+    toggleIsDone: action,
+    toggleIsEditing: action,
+    updateText: action
+});
