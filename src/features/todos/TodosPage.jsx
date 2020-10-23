@@ -7,11 +7,11 @@ import AlertDialog from "../../shared/components/Dialog";
 import useViewModel from "../../shared/hooks/use-view-model";
 import mockTodosProvider from "../../shared/test-provider";
 import AddTodo from "./AddTodo";
-import TodosUiStore from './stores/todos-ui-store';
+import TodosViewModel from './stores/todos-view-model';
 import TodosList from "./TodosList";
 
 const TodosPage = observer(() => {
-    const todosUiStore = useViewModel(new TodosUiStore({
+    const todosUiStore = useViewModel(new TodosViewModel({
         deps: {
             resource: mockTodosProvider,
             initialQuery: {ids: [1,2,3]}

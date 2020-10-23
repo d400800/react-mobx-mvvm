@@ -1,8 +1,8 @@
 import {action, computed, makeObservable} from "mobx";
 
-import UiStore from "../../../shared/models/ui-store";
+import ViewModel from "../../../shared/models/view-model";
 
-export default class TodosUiStore extends UiStore {
+export default class TodosViewModel extends ViewModel {
     constructor({data, uiData, deps}) {
         super({data, uiData});
 
@@ -21,7 +21,7 @@ export default class TodosUiStore extends UiStore {
 
     async loadTodos(query) {
         const response = await this.resource(query);
-        
+
         this.data.todos = response.data;
     }
 

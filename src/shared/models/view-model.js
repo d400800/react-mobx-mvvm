@@ -1,7 +1,7 @@
-import {observable, makeObservable} from "mobx";
+import {observable, action, makeObservable} from "mobx";
 
-export default class UiStore {
-    constructor({data, uiData} = {}) {
+export default class ViewModel {
+    constructor({data, uiData, deps} = {}) {
         this.data = {
             ...this.constructor.getDefaultData(),
             ...data
@@ -14,8 +14,13 @@ export default class UiStore {
 
         makeObservable(this, {
             data: observable,
-            uiData: observable
+            uiData: observable,
+            updateData: action,
+            updateUiData: action,
+            update: action
         });
+
+        Object.assign(this, deps);
     }
 
     updateUiData(uiData) {
@@ -40,8 +45,6 @@ export default class UiStore {
     }
 
     static getDefaultData() {
-        return {
-            todos: []
-        };
+        return {};
     }
 }

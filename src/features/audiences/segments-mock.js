@@ -1,0 +1,95 @@
+export default async function SegmentsProvider() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                data: [
+                    {
+                        "id":"R1na",
+                        "parent_id":"R",
+                        "name":"Test RegEX",
+                        "num_of_users":1,
+                        "alias":null,
+                        "lifespan_days":null,
+                        "use_tag":null,
+                        "tags":null,
+                        "categories":null,
+                        "excluded":null,
+                        "lookAlike":null,
+                        "fire_fb_pixel":null,
+                        "capacity":null,
+                        "is_leaf":1,
+                        "cost":0
+                    },
+                    {
+                        "id":"R1oj",
+                        "parent_id":"R",
+                        "name":"Test123",
+                        "num_of_users":1,
+                        "alias":null,
+                        "lifespan_days":null,
+                        "use_tag":null,
+                        "tags":null,
+                        "categories":null,
+                        "excluded":null,
+                        "lookAlike":null,
+                        "fire_fb_pixel":null,
+                        "capacity":null,
+                        "is_leaf":1,
+                        "cost":0
+                    },
+                    {
+                        "id":"R8oa",
+                        "parent_id":"R",
+                        "name":"test - pera",
+                        "num_of_users":0,
+                        "alias":null,
+                        "lifespan_days":null,
+                        "use_tag":null,
+                        "tags":null,
+                        "categories":null,
+                        "excluded":null,
+                        "lookAlike":null,
+                        "fire_fb_pixel":null,
+                        "capacity":null,
+                        "is_leaf":1,
+                        "cost":0
+                    },
+                    {
+                        "id":"C2",
+                        "parent_id":"C",
+                        "name":"affiliateReferral",
+                        "num_of_users":0,
+                        "alias":null,
+                        "lifespan_days":null,
+                        "use_tag":null,
+                        "tags":null,
+                        "categories":null,
+                        "excluded":null,
+                        "lookAlike":null,
+                        "fire_fb_pixel":null,
+                        "capacity":null,
+                        "is_leaf":1,
+                        "cost":0
+                    },
+                    {
+                        "id":"C6",
+                        "parent_id":"C",
+                        "name":"searchAndFilter",
+                        "num_of_users":0,
+                        "alias":null,
+                        "lifespan_days":null,
+                        "use_tag":null,
+                        "tags":null,
+                        "categories":null,
+                        "excluded":null,
+                        "lookAlike":null,
+                        "fire_fb_pixel":null,
+                        "capacity":null,
+                        "is_leaf":1,
+                        "cost":0
+                    }
+                ]
+            });
+        }, 1000);
+    });
+}

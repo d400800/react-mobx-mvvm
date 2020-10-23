@@ -4,19 +4,19 @@ import React from 'react';
 import {Box, Typography, TextField, Button} from "@material-ui/core";
 
 import useViewModel from "../../shared/hooks/use-view-model";
-import UiStore from "../../shared/models/ui-store";
-import TodoUiStore from "./stores/todo-ui-store";
+import ViewModel from "../../shared/models/view-model";
+import TodoItemViewModel from "./stores/todo-item-view-model";
 
 const AddTodo = observer(({todosUiStore}) => {
     function createTodo(todoText) {
-        todosUiStore.addTodo(new TodoUiStore({
+        todosUiStore.addTodo(new TodoItemViewModel({
             data: {text: todoText, isDone: false}
         }));
 
         addTodoUiStore.updateData({text: ''});
     }
 
-    const addTodoUiStore = useViewModel(new UiStore({data: {text: ''}}));
+    const addTodoUiStore = useViewModel(new ViewModel({data: {text: ''}}));
 
     return (
         <>

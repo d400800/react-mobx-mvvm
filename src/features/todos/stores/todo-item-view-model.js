@@ -1,8 +1,8 @@
 import {action, makeObservable} from "mobx";
 
-import UiStore from "../../../shared/models/ui-store";
+import ViewModel from "../../../shared/models/view-model";
 
-export default class TodoUiStore extends UiStore {
+export default class TodoItemViewModel extends ViewModel {
     constructor({data, uiData}) {
         super({data, uiData});
 

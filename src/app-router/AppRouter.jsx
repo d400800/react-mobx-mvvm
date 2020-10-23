@@ -5,6 +5,8 @@ import {
     Route
 } from "react-router-dom";
 
+import AudienceBuilder from "../features/audiences/audience-builder/AudienceBuilder";
+import {AudienceBuilderContextProvider} from "../features/audiences/audience-builder/AudienceBuilderContext";
 import CampaignPage from "../features/campaign/CampaignPage";
 import TodosPage from "../features/todos/TodosPage";
 
@@ -22,6 +24,12 @@ export default function AppRouter() {
 
                 <Route exact path="/test-page">
                     <CampaignPage />
+                </Route>
+
+                <Route exact path="/audience-builder">
+                    <AudienceBuilderContextProvider>
+                        <AudienceBuilder />
+                    </AudienceBuilderContextProvider>
                 </Route>
             </Switch>
         </Router>
