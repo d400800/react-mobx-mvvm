@@ -24,20 +24,16 @@ export default async function AudienceWithSegmentsProvider() {
                                 "parent_id":"0",
                                 "name":"Nike lovers",
                                 "num_of_users":13,
-                                "alias":null,
                                 "cost":0,
-                                "lifespan_days":null,
-                                "segment_weight":1
+                                "lifespan_days":null
                             },
                             {
                                 "id":"G",
                                 "parent_id":"R",
                                 "name":"Abandoned cart",
                                 "num_of_users":8,
-                                "alias":null,
                                 "cost":0,
-                                "lifespan_days":null,
-                                "segment_weight":1
+                                "lifespan_days":null
                             }
                         ]
                     ]

@@ -42,9 +42,15 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
 
     const anchorEl = document.getElementById(`segment-selector-${clusivity}-${segmentGroupIndex}`);
 
-    function addCondition(segment, segmentGroup, operator = 'or', segmentGroupIndex = 0, clusivity = 'included') {
-        console.log('segmentGroup: ', segmentGroup);
+    function getCategories(segmentGroup) {
+        return segmentGroup.reduce((acc, curr) => {
+            const segmentIds = curr.map(segment => segment.id);
 
+            return [...acc, segmentIds];
+        }, []);
+    }
+
+    function addCondition(segment, segmentGroup, operator = 'or', segmentGroupIndex = 0, clusivity = 'included') {
         if (operator === 'and') {
             const newSegmentGroup = audienceVm.data[clusivity]
                 .map((segmentArr, i) => {
@@ -55,15 +61,19 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
                     return segmentArr;
                 });
 
+            const categories = getCategories(newSegmentGroup);
+
             audienceVm.updateData({
-                [clusivity]: newSegmentGroup
+                [clusivity]: newSegmentGroup,
+                categories
             });
         } else {
             audienceVm.updateData({
                 [clusivity]: [
                     ...audienceVm.data[clusivity],
                     [segment]
-                ]
+                ],
+                categories: [...audienceVm.data.categories, [segment.id]]
             });
         }
 

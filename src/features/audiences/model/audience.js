@@ -1,4 +1,4 @@
-import {action, toJS, makeObservable} from "mobx";
+import {action, runInAction, toJS, makeObservable} from "mobx";
 
 import ViewModel from "../../../shared/models/view-model";
 
@@ -19,18 +19,21 @@ export default class Audience extends ViewModel {
 
         const {name, included, excluded, categories, lifespan_days: lifespanDays, id} = response.data;
 
-        this.updateData({
-            name,
-            included,
-            excluded,
-            categories,
-            lifespanDays,
-            id
+        runInAction(() => {
+            this.updateData({
+                name,
+                included,
+                excluded,
+                categories,
+                lifespanDays,
+                id
+            });
         });
     }
 
     saveAudience() {
         console.log(toJS(this.data));
+        console.log(this.toJSON());
     }
 
     static getDefaultData() {

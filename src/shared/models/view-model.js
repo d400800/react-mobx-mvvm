@@ -47,4 +47,8 @@ export default class ViewModel {
     static getDefaultData() {
         return {};
     }
+
+    toJSON() {
+        return {data: this.data};
+    }
 }
