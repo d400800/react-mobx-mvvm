@@ -17,7 +17,7 @@ export default class Audience extends ViewModel {
     async loadAudience() {
         const response = await this.mock();
 
-        const {name, included, excluded, categories, lifespan_days: lifespanDays, id} = response.data;
+        const {name, included, excluded, categories, excludedCategories, lifespan_days: lifespanDays, id} = response.data;
 
         runInAction(() => {
             this.updateData({
@@ -26,6 +26,7 @@ export default class Audience extends ViewModel {
                 excluded,
                 categories,
                 lifespanDays,
+                excludedCategories,
                 id
             });
         });

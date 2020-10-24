@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 export default function AppLayout(props) {
     return (
         <>
-            <Box mt={10} px={2}>
+            <Box mt={4} px={2}>
                 <Grid container>
                     <Grid item xs={12}>
                         <Box p={2}>

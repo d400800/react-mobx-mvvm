@@ -25,12 +25,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
+const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
     const classes = useStyles();
 
     const audienceBuilderStateContext = useAudienceBuilderStateContext();
     const audienceVm = audienceBuilderStateContext.audienceViewModel;
     const segments = audienceBuilderStateContext.segments;
+
+    console.log(audienceVm);
 
     const [open, setOpen] = React.useState(false);
     const [operator, setOperator] = React.useState('');
@@ -50,7 +52,9 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
         }, []);
     }
 
-    function addCondition(segment, segmentGroup, operator = 'or', segmentGroupIndex = 0, clusivity = 'included') {
+    function addCondition(segment, operator = 'or', segmentGroupIndex = 0, clusivity) {
+        const segmentIdsField = clusivity === 'included' ? 'categories' : 'excludedCategories';
+
         if (operator === 'and') {
             const newSegmentGroup = audienceVm.data[clusivity]
                 .map((segmentArr, i) => {
@@ -65,7 +69,7 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
 
             audienceVm.updateData({
                 [clusivity]: newSegmentGroup,
-                categories
+                [segmentIdsField]: categories
             });
         } else {
             audienceVm.updateData({
@@ -73,7 +77,7 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
                     ...audienceVm.data[clusivity],
                     [segment]
                 ],
-                categories: [...audienceVm.data.categories, [segment.id]]
+                [segmentIdsField]: [...audienceVm.data[segmentIdsField], [segment.id]]
             });
         }
 
@@ -83,23 +87,36 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
     return (
         <Box id={`segment-selector-${clusivity}-${segmentGroupIndex}`}>
             <Box display="flex" mt={1}>
-                <Box mr={4} color="primary.main">
-                    <Typography role="button"
-                                className={classes.operatorBtn}
-                                onClick={() => selectSegment('and')}
-                                variant="subtitle2">
-                        and
-                    </Typography>
-                </Box>
+                {audienceVm.data[clusivity].length > 0 ?
+                    <>
+                        <Box mr={4} color="primary.main">
+                            <Typography role="button"
+                                        className={classes.operatorBtn}
+                                        onClick={() => selectSegment('and')}
+                                        variant="subtitle2">
+                                and
+                            </Typography>
+                        </Box>
 
-                <Box color="primary.main">
-                    <Typography role="button"
-                                className={classes.operatorBtn}
-                                onClick={() => selectSegment('or')}
-                                variant="subtitle2">
-                        or
-                    </Typography>
-                </Box>
+                        <Box color="primary.main">
+                            <Typography role="button"
+                                        className={classes.operatorBtn}
+                                        onClick={() => selectSegment('or')}
+                                        variant="subtitle2">
+                                or
+                            </Typography>
+                        </Box>
+                    </>
+                    :
+                    <Box color="primary.main">
+                        <Typography role="button"
+                                    className={classes.operatorBtn}
+                                    onClick={() => selectSegment('or')}
+                                    variant="subtitle2">
+                            add condition
+                        </Typography>
+                    </Box>
+                }
             </Box>
 
             <Popover
@@ -117,7 +134,7 @@ const SegmentSelector = ({segmentGroupIndex, segmentGroup, clusivity}) => {
                             IconComponent={ChevronRightIcon}
                             renderValue={() => <></>}
                             defaultValue={''}
-                            onChange={e => addCondition(e.target.value, segmentGroup, operator, segmentGroupIndex, clusivity)}
+                            onChange={e => addCondition(e.target.value, operator, segmentGroupIndex, clusivity)}
                         >
                             {segments.map(segment => (
                                 <MenuItem key={segment.id} value={segment}>{segment.name}</MenuItem>

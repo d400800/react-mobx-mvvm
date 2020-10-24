@@ -11,12 +11,11 @@ export default async function AudienceWithSegmentsProvider() {
                             "G"
                         ]
                     ],
+                    "excludedCategories": [],
                     "update_date":"2018-06-19T14:03:47.000Z",
                     "name":"Nike leavers",
                     "lifespan_days":5,
-                    "excluded":[
-
-                    ],
+                    "excluded":[],
                     "included":[
                         [
                             {
