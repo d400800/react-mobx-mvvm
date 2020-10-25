@@ -1,7 +1,11 @@
-import {useState} from "react";
+import {useRef} from "react";
 
 export default function useViewModel(initialViewModelState) {
-    const [UiStore] = useState(initialViewModelState);
+    let uiStoreRef = useRef(null);
 
-    return UiStore;
+    if (!uiStoreRef.current) {
+        uiStoreRef.current = initialViewModelState;
+    }
+
+    return uiStoreRef.current;
 }
