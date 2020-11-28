@@ -1,54 +1,31 @@
-import {observable, action, makeObservable} from "mobx";
+import {action, makeObservable, toJS} from "mobx";
 
 export default class ViewModel {
-    constructor({data, uiData, deps} = {}) {
-        this.data = {
-            ...this.constructor.getDefaultData(),
-            ...data
-        };
-
-        this.uiData = {
-            ...this.constructor.getDefaultUiData(),
-            ...uiData
-        };
+    constructor({data, context} = {}) {
+        Object.assign(
+            this,
+            this.constructor.getDefaults(),
+            data,
+            context
+        );
 
         makeObservable(this, {
-            data: observable,
-            uiData: observable,
-            updateData: action,
-            updateUiData: action,
             update: action
         });
-
-        Object.assign(this, deps);
     }
 
-    updateUiData(uiData) {
-        for (const key in uiData) {
-            this.uiData[key] = uiData[key];
-        }
-    }
-
-    updateData(data) {
+    update(data) {
         for (const key in data) {
-            this.data[key] = data[key];
+            this[key] = data[key];
         }
     }
 
-    update(data, uiData) {
-        this.updateData(data);
-        this.updateUiData(uiData);
-    }
-
-    static getDefaultUiData() {
+    static getDefaults() {
         return {};
     }
 
-    static getDefaultData() {
-        return {};
-    }
-
-    toJSON() {
-        return {data: this.data};
+    // Tl - transfer layer
+    toTlData() {
+        return toJS;
     }
 }

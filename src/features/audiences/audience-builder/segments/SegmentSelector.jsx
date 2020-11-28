@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Box, makeStyles, MenuItem, Popover, Select, Typography} from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -32,10 +32,8 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
     const audienceVm = audienceBuilderStateContext.audienceViewModel;
     const segments = audienceBuilderStateContext.segments;
 
-    console.log(audienceVm);
-
-    const [open, setOpen] = React.useState(false);
-    const [operator, setOperator] = React.useState('');
+    const [open, setOpen] = useState(false);
+    const [operator, setOperator] = useState('');
 
     function selectSegment(operator) {
         setOpen(true);
@@ -44,19 +42,9 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
 
     const anchorEl = document.getElementById(`segment-selector-${clusivity}-${segmentGroupIndex}`);
 
-    function getCategories(segmentGroup) {
-        return segmentGroup.reduce((acc, curr) => {
-            const segmentIds = curr.map(segment => segment.id);
-
-            return [...acc, segmentIds];
-        }, []);
-    }
-
     function addCondition(segment, operator = 'or', segmentGroupIndex = 0, clusivity) {
-        const segmentIdsField = clusivity === 'included' ? 'categories' : 'excludedCategories';
-
         if (operator === 'and') {
-            const newSegmentGroup = audienceVm.data[clusivity]
+            const newSegmentGroup = audienceVm[clusivity]
                 .map((segmentArr, i) => {
                     if (i === segmentGroupIndex) {
                         return [...segmentArr, segment];
@@ -65,19 +53,15 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
                     return segmentArr;
                 });
 
-            const categories = getCategories(newSegmentGroup);
-
-            audienceVm.updateData({
-                [clusivity]: newSegmentGroup,
-                [segmentIdsField]: categories
+            audienceVm.update({
+                [clusivity]: newSegmentGroup
             });
         } else {
-            audienceVm.updateData({
+            audienceVm.update({
                 [clusivity]: [
-                    ...audienceVm.data[clusivity],
+                    ...audienceVm[clusivity],
                     [segment]
-                ],
-                [segmentIdsField]: [...audienceVm.data[segmentIdsField], [segment.id]]
+                ]
             });
         }
 
@@ -87,7 +71,7 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
     return (
         <Box id={`segment-selector-${clusivity}-${segmentGroupIndex}`}>
             <Box display="flex" mt={1}>
-                {audienceVm.data[clusivity].length > 0 ?
+                {audienceVm[clusivity].length > 0 ?
                     <>
                         <Box mr={4} color="primary.main">
                             <Typography role="button"

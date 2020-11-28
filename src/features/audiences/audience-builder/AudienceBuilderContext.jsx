@@ -8,23 +8,24 @@ import SegmentsProvider from "../segments-mock";
 const AudienceBuilderStateContext = createContext();
 
 export function AudienceBuilderContextProvider({children}) {
-    const audienceViewModel = useViewModel(new Audience({
-        deps: {
-            mock: AudienceWithSegmentsProvider
-        }
-    }));
+    const audienceViewModel = useViewModel(() => new Audience({}));
 
+    // TODO: add some infrastructure to data loading
     const [segments, setSegments] = useState([]);
 
     useEffect(() => {
-        async function loadSegments() {
-            const response = await SegmentsProvider();
+        async function loadData() {
+            const [segments, audienceWithSegments] = await Promise.all([
+                SegmentsProvider(),
+                AudienceWithSegmentsProvider()
+            ]);
 
-            setSegments(response.data);
+            setSegments(segments.data);
+            audienceViewModel.update(audienceWithSegments.data);
         }
 
-        loadSegments();
-    }, []);
+        loadData();
+    }, [audienceViewModel]);
 
     const initialValue = {
         audienceViewModel,

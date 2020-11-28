@@ -36,8 +36,8 @@ const AudienceConditions = ({label='', color='#000', clusivity}) => {
             <Typography variant="caption" className={classes.label}>{label}</Typography>
 
             <Box>
-                {audienceVm.data[clusivity] && audienceVm.data[clusivity].length > 0 ?
-                    audienceVm.data[clusivity].map((segmentGroup, i) => (
+                {audienceVm[clusivity] && audienceVm[clusivity].length > 0 ?
+                    audienceVm[clusivity].map((segmentGroup, i) => (
                         <Box key={i}>
                             <Box>
                                 <SegmentsTree segmentGroup={segmentGroup} segmentGroupIndex={i}/>

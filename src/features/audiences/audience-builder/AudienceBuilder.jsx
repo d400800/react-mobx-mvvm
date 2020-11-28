@@ -24,7 +24,7 @@ const AudienceBuilder = observer(() => {
                         <AudienceConditions
                             color={theme.palette.success.light}
                             label="Include"
-                            clusivity="included"
+                            clusivity="includedSegments"
                         />
                     </Box>
 
@@ -32,7 +32,7 @@ const AudienceBuilder = observer(() => {
                         <AudienceConditions
                             color={theme.palette.error.light}
                             label="Exclude"
-                            clusivity="excluded"
+                            clusivity="excludedSegments"
                         />
                     </Box>
 
@@ -46,7 +46,11 @@ const AudienceBuilder = observer(() => {
                 </Grid>
 
                 <Grid item md={4}>
-                    <pre mb={4}>{JSON.stringify(audienceVm, null, '\t')}</pre>
+                    <pre mb={4}>{JSON.stringify({
+                        ...audienceVm,
+                        includedSegmentIds: audienceVm.includedSegmentIds,
+                        excludedSegmentIds: audienceVm.excludedSegmentIds
+                    }, null, '\t')}</pre>
                 </Grid>
             </Grid>
         </>

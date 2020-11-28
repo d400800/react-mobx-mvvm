@@ -14,29 +14,29 @@ import {useAudienceBuilderStateContext} from './AudienceBuilderContext';
 const AudienceName = observer((props) => {
     const audienceVm = useAudienceBuilderStateContext().audienceViewModel;
 
-    const vm = useViewModel(new AudienceNameViewModel({
-        data: {test: audienceVm.data.name},
-        deps: {audienceVm}
+    const vm = useViewModel(() => new AudienceNameViewModel({
+        data: {test: audienceVm.name},
+        context: {audienceVm}
     }));
 
     return (
         <Box>
-            {vm.uiData.editMode ?
+            {vm.editMode ?
                 <Box display="flex">
                     <TextField
-                        value={vm.data.name}
-                        onChange={e => vm.updateData({name: e.target.value})}
+                        value={vm.name}
+                        onChange={e => vm.update({name: e.target.value})}
                     />
 
                     <IconButton
-                        onClick={() => vm.saveName(vm.data.name)}
+                        onClick={() => vm.saveName(vm.name)}
                         size="small"
                         color="primary">
                         <CheckIcon/>
                     </IconButton>
 
                     <IconButton
-                        onClick={() => vm.cancelUpdateName(audienceVm.data.name)}
+                        onClick={() => vm.cancelUpdateName(audienceVm.name)}
                         size="small"
                         color="secondary">
                         <ClearIcon/>
@@ -46,12 +46,12 @@ const AudienceName = observer((props) => {
                 <Box display="flex">
                     <Box mr={1}>
                         <Typography variant="h6">
-                            {audienceVm.data.name}
+                            {audienceVm.name}
                         </Typography>
                     </Box>
 
                     <IconButton
-                        onClick={() => vm.enterEditMode(audienceVm.data.name)}
+                        onClick={() => vm.enterEditMode(audienceVm.name)}
                         size="small"
                         color="primary">
                         <EditIcon/>

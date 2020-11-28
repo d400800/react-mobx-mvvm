@@ -1,51 +1,50 @@
-import {action, makeObservable} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 
 import ViewModel from "../../../shared/models/view-model";
 
 export default class AudienceNameViewModel extends ViewModel {
-    constructor({data, uiData, deps}) {
-        super({data, uiData, deps});
+    constructor({data, context}) {
+        super({data, context});
 
         makeObservable(this, {
             enterEditMode: action,
             toggleEditMode: action,
-            cancelUpdateName: action
+            cancelUpdateName: action,
+            editMode: observable,
+            name: observable
         });
     }
     
     saveName(name) {
-        this.audienceVm.updateData({name});
+        this.audienceVm.update({name});
 
         this.toggleEditMode();
     }
 
     toggleEditMode() {
-        this.updateUiData(
-            {editMode: !this.uiData.editMode}
+        this.update(
+            {editMode: !this.editMode}
         );
     }
 
     enterEditMode(name) {
         this.toggleEditMode();
 
-        this.updateData({name});
+        this.update({name});
     }
 
     cancelUpdateName(name) {
         this.update(
-            {name},
-            {editMode: false}
+            {
+                name,
+                editMode: false
+            }
         );
     }
 
-    static getDefaultData() {
+    static getDefaults() {
         return {
-            name: ''
-        };
-    }
-
-    static getDefaultUiData() {
-        return {
+            name: '',
             editMode: false
         };
     }

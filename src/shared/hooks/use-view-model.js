@@ -1,11 +1,11 @@
 import {useRef} from "react";
 
-export default function useViewModel(initialViewModelState) {
-    let uiStoreRef = useRef(null);
+export default function useViewModel(viewModelInitializer) {
+    const viewModelRef = useRef(null);
 
-    if (!uiStoreRef.current) {
-        uiStoreRef.current = initialViewModelState;
+    if (!viewModelRef.current) {
+        viewModelRef.current = viewModelInitializer();
     }
 
-    return uiStoreRef.current;
+    return viewModelRef.current;
 }

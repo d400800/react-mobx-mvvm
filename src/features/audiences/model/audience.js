@@ -1,54 +1,49 @@
-import {action, runInAction, toJS, makeObservable} from "mobx";
+import {action, computed, makeObservable, observable} from "mobx";
 
 import ViewModel from "../../../shared/models/view-model";
 
 export default class Audience extends ViewModel {
-    constructor({data, uiData, deps}) {
-        super({data, uiData, deps});
+    constructor({data={}, context={}}) {
+        super({data, context});
 
         makeObservable(this, {
-            loadAudience: action,
-            saveAudience: action
-        });
-
-        this.loadAudience();
-    }
-
-    async loadAudience() {
-        const response = await this.mock();
-
-        const {name, included, excluded, categories, excludedCategories, lifespan_days: lifespanDays, id} = response.data;
-
-        runInAction(() => {
-            this.updateData({
-                name,
-                included,
-                excluded,
-                categories,
-                lifespanDays,
-                excludedCategories,
-                id
-            });
+            name: observable,
+            saveAudience: action,
+            includedSegments: observable,
+            excludedSegments: observable,
+            includedSegmentIds: computed,
+            excludedSegmentIds: computed
         });
     }
 
     saveAudience() {
-        console.log(toJS(this.data));
-        console.log(this.toJSON());
+        console.log(
+            {
+                name: this.name,
+                lifespanDays: this.lifespanDays,
+                includedSegments: this.toTlData()(this.includedSegments),
+                excludedSegments: this.toTlData()(this.excludedSegments)
+            }
+        );
     }
 
-    static getDefaultData() {
+    static getDefaults() {
         return {
+            name: '',
             id: null,
-            lifespanDays: null,
-            categories: [],
-            included: [],
-            excluded: [],
-            name: ''
+            excludedSegments: [],
+            includedSegments: [],
+            lifespanDays: null
         };
     }
 
-    static getDefaultUiData() {
-        return {};
+    get includedSegmentIds() {
+        return this.includedSegments
+            .map(sg => sg.map(s => s.id));
+    }
+
+    get excludedSegmentIds() {
+        return this.excludedSegments
+            .map(sg => sg.map(s => s.id));
     }
 }
