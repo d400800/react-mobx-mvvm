@@ -17,7 +17,7 @@ export default class Audience extends ViewModel {
     }
 
     saveAudience() {
-        console.log(
+        this.audienceResource.saveAudience(
             {
                 name: this.name,
                 lifespanDays: this.lifespanDays,

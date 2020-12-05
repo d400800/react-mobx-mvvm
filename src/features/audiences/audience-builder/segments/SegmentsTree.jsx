@@ -14,7 +14,7 @@ const SegmentsTree = ({segmentGroup, segmentGroupIndex}) => {
                 <Box key={segment.id} mb={1}>
                     <Grid container spacing={3} alignItems="flex-end">
                         <Grid item xs={1}>
-                            <Box color="primary.main" mr={2}>
+                            <Box color="primary.main" mr={2} operator-box="true">
                                 {shouldPrintOperator(segmentGroupIndex, i) &&
                                     <Typography variant="subtitle2">
                                         {i === 0 ? 'or' : 'and'}
@@ -24,7 +24,7 @@ const SegmentsTree = ({segmentGroup, segmentGroupIndex}) => {
                         </Grid>
 
                         <Grid item xs={11}>
-                            <Typography variant="h6">{segment.name}</Typography>
+                            <Typography id={segment.id+'-text'} variant="h6">{segment.name}</Typography>
                         </Grid>
                     </Grid>
                 </Box>

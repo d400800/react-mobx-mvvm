@@ -1,19 +1,25 @@
 import {observer} from "mobx-react";
 import React from 'react';
 
-import {Grid, Box, Button, useTheme} from '@material-ui/core';
+import {Grid, Box, Button, Fade, CircularProgress, useTheme} from '@material-ui/core';
 
 import {useAudienceBuilderStateContext} from './AudienceBuilderContext';
 import AudienceConditions from './AudienceConditions';
 import AudienceName from './AudienceName';
 
 const AudienceBuilder = observer(() => {
-    const audienceVm = useAudienceBuilderStateContext().audienceViewModel;
+    const {audienceViewModel: audienceVm, loaded} = useAudienceBuilderStateContext();
 
     const theme = useTheme();
 
+    if (!loaded) return (
+        <Box display="flex" justifyContent="center" mt={10}>
+            <CircularProgress/>
+        </Box>
+    );
+
     return (
-        <>
+        <Fade in={loaded} timeout={{enter: 800}}>
             <Grid container spacing={10}>
                 <Grid item md={8}>
                     <Box mb={8}>
@@ -53,7 +59,7 @@ const AudienceBuilder = observer(() => {
                     }, null, '\t')}</pre>
                 </Grid>
             </Grid>
-        </>
+        </Fade>
     );
 });
 
