@@ -12,16 +12,16 @@ export default async function AudienceWithSegmentsProvider() {
                     includedSegments: [
                         [
                             {
-                                id: "C2",
-                                parentId: "C",
-                                name: "Click",
-                                numOfUsers: 13
+                                id: "R5",
+                                parentId: "R",
+                                name: "Wishlist page",
+                                numOfUsers: 411
                             },
                             {
-                                id: "C7",
+                                id: "C5",
                                 parentId: "C",
-                                name:"Abandoned cart",
-                                numOfUsers: 8
+                                name: "Remove from wishlist",
+                                numOfUsers: 112
                             }
                         ]
                     ]

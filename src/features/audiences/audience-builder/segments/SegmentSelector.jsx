@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 
-import {Box, makeStyles, MenuItem, Popover, Select, Typography} from '@material-ui/core';
+import {Box, makeStyles,  Popover,  Typography} from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import {useAudienceBuilderStateContext} from '../AudienceBuilderContext';
+import ConditionsSet from './ConditionsSet';
 
 const useStyles = makeStyles(theme => ({
     operatorBtn: {
@@ -67,7 +67,10 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
 
         setOpen(false);
     }
-    
+
+    const ruleSegments = {title: 'Rules segments', segments: segments.filter(s => s.parentId === 'R')};
+    const eventSegments = {title: 'Event segments', segments: segments.filter(s => s.parentId === 'C')};
+
     return (
         <Box id={`segment-selector-${clusivity}-${segmentGroupIndex}`}>
             <Box display="flex" mt={1}>
@@ -111,20 +114,16 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
                 <Box minHeight={150} py={1} pr={2}>
                     <ListSubheader>Add Condition</ListSubheader>
 
-                    <Box className={classes.conditionBox}>
-                        <Typography variant="h6">Segments</Typography>
-
-                        <Select
-                            IconComponent={ChevronRightIcon}
-                            renderValue={() => <></>}
-                            defaultValue={''}
-                            onChange={e => addCondition(e.target.value, operator, segmentGroupIndex, clusivity)}
-                        >
-                            {segments.map(segment => (
-                                <MenuItem key={segment.id} value={segment}>{segment.name}</MenuItem>
-                            ))}
-                        </Select>
-                    </Box>
+                    <ConditionsSet
+                        operator={operator}
+                        segmentGroupIndex={segmentGroupIndex}
+                        clusivity={clusivity}
+                        classes={classes}
+                        conditions={[
+                            ruleSegments, eventSegments
+                        ]}
+                        addCondition={addCondition}
+                    />
                 </Box>
             </Popover>
         </Box>
