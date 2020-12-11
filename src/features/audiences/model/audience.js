@@ -9,6 +9,7 @@ export default class Audience extends ViewModel {
         makeObservable(this, {
             name: observable,
             saveAudience: action,
+            removeCondition: action,
             includedSegments: observable,
             excludedSegments: observable,
             includedSegmentIds: computed,
@@ -25,6 +26,18 @@ export default class Audience extends ViewModel {
                 excludedSegments: this.toTlData()(this.excludedSegments)
             }
         );
+    }
+
+    removeCondition(clusivity, segmentGroupIndex, segmentId) {
+        const newSegments = this[clusivity][segmentGroupIndex]
+            .filter(s => s.id !== segmentId);
+
+        this[clusivity]
+            .splice(segmentGroupIndex, 1, newSegments);
+
+        if (this[clusivity].length === 1 && this[clusivity][0].length === 0) {
+            this[clusivity] = [];
+        }
     }
 
     static getDefaults() {

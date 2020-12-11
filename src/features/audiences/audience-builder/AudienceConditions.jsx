@@ -40,7 +40,7 @@ const AudienceConditions = ({label='', color='#000', clusivity}) => {
                     audienceVm[clusivity].map((segmentGroup, i) => (
                         <Box key={i}>
                             <Box>
-                                <SegmentsTree segmentGroup={segmentGroup} segmentGroupIndex={i}/>
+                                <SegmentsTree segmentGroup={segmentGroup} segmentGroupIndex={i} clusivity={clusivity}/>
                             </Box>
 
                             <Box mt={3}>

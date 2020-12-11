@@ -1,11 +1,20 @@
 import React from 'react';
 
-import {Box, Grid, Typography} from '@material-ui/core';
+import {Box, Grid, Typography, IconButton} from '@material-ui/core';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
 
-const SegmentsTree = ({segmentGroup, segmentGroupIndex}) => {
+import {useAudienceBuilderStateContext} from "../AudienceBuilderContext";
+
+const SegmentsTree = ({clusivity, segmentGroup, segmentGroupIndex}) => {
+    const {audienceViewModel: audienceVm} = useAudienceBuilderStateContext();
+
     function shouldPrintOperator(segmentGroupIndex, i) {
         // omit operator if it is the 1st child of the 1st parent
         return !(segmentGroupIndex === 0 && i === 0);
+    }
+
+    function removeCondition(segmentId) {
+        audienceVm.removeCondition(clusivity, segmentGroupIndex, segmentId);
     }
 
     return (
@@ -24,7 +33,17 @@ const SegmentsTree = ({segmentGroup, segmentGroupIndex}) => {
                         </Grid>
 
                         <Grid item xs={11}>
-                            <Typography id={segment.id+'-text'} variant="h6">{segment.name}</Typography>
+                            <Box display="flex" alignItems="center">
+                                <Typography id={segment.id + '-text'} variant="h6">{segment.name}</Typography>
+
+                                <Box>
+                                    <IconButton aria-label="delete"
+                                                size="small"
+                                                onClick={() => removeCondition(segment.id)}>
+                                        <DeleteOutline />
+                                    </IconButton>
+                                </Box>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Box>

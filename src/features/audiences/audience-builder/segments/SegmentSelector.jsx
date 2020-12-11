@@ -32,15 +32,15 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
     const audienceVm = audienceBuilderStateContext.audienceViewModel;
     const segments = audienceBuilderStateContext.segments;
 
-    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
     const [operator, setOperator] = useState('');
 
-    function selectSegment(operator) {
-        setOpen(true);
+    function selectSegment(e, operator) {
+        setAnchorEl(e.currentTarget);
         setOperator(operator);
     }
-
-    const anchorEl = document.getElementById(`segment-selector-${clusivity}-${segmentGroupIndex}`);
 
     function addCondition(segment, operator = 'or', segmentGroupIndex = 0, clusivity) {
         if (operator === 'and') {
@@ -65,7 +65,7 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
             });
         }
 
-        setOpen(false);
+        setAnchorEl(null);
     }
 
     const ruleSegments = {title: 'Rules segments', segments: segments.filter(s => s.parentId === 'R')};
@@ -79,7 +79,7 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
                         <Box mr={4} color="primary.main">
                             <Typography role="button"
                                         className={classes.operatorBtn}
-                                        onClick={() => selectSegment('and')}
+                                        onClick={e => selectSegment(e, 'and')}
                                         variant="subtitle2">
                                 and
                             </Typography>
@@ -88,7 +88,7 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
                         <Box color="primary.main">
                             <Typography role="button"
                                         className={classes.operatorBtn}
-                                        onClick={() => selectSegment('or')}
+                                        onClick={e => selectSegment(e, 'or')}
                                         variant="subtitle2">
                                 or
                             </Typography>
@@ -97,8 +97,9 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
                     :
                     <Box color="primary.main">
                         <Typography role="button"
+                                    data-test="btn"
                                     className={classes.operatorBtn}
-                                    onClick={() => selectSegment('or')}
+                                    onClick={e => selectSegment(e, 'or')}
                                     variant="subtitle2">
                             add condition
                         </Typography>
@@ -109,9 +110,9 @@ const SegmentSelector = ({segmentGroupIndex = 0, clusivity}) => {
             <Popover
                 open={open}
                 anchorEl={anchorEl}
-                onClose={() => setOpen(false)}
+                onClose={() => setAnchorEl(null)}
             >
-                <Box minHeight={150} py={1} pr={2}>
+                <Box minHeight={150} py={1} pr={2} data-test="box">
                     <ListSubheader>Add Condition</ListSubheader>
 
                     <ConditionsSet
