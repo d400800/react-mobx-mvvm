@@ -5,7 +5,6 @@ import {
     Route
 } from "react-router-dom";
 
-import AudienceResource from "../features/audiences/audience-builder/audience-resource";
 import AudienceBuilder from "../features/audiences/audience-builder/AudienceBuilder";
 import {AudienceBuilderContextProvider} from "../features/audiences/audience-builder/AudienceBuilderContext";
 
@@ -14,7 +13,7 @@ export default function AppRouter() {
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <AudienceBuilderContextProvider audienceResource={AudienceResource}>
+                    <AudienceBuilderContextProvider>
                         <AudienceBuilder />
                     </AudienceBuilderContextProvider>
                 </Route>

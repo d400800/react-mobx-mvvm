@@ -1,14 +1,14 @@
 import React, {createContext, useContext} from 'react';
 
 import useViewModel from "../../../shared/hooks/use-view-model";
+import audienceResource from "../../audiences/audience-builder/audience-resource";
 import Audience from "../model/audience";
 import useAudienceBuilder from './use-audience-builder';
 
 const AudienceBuilderStateContext = createContext();
 
-export function AudienceBuilderContextProvider({children, audienceResource}) {
+export function AudienceBuilderContextProvider({children}) {
     const audienceViewModel = useViewModel(() => new Audience({
-        data: {},
         context: {audienceResource}
     }));
     

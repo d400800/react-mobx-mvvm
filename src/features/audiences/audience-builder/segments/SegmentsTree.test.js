@@ -1,6 +1,7 @@
-import {shallow, render} from 'enzyme';
+import {mount} from 'enzyme';
 import React from "react";
 
+import {AudienceBuilderContextProvider} from '../AudienceBuilderContext';
 import SegmentsTree from "./SegmentsTree";
 
 const segmentGroup = [
@@ -18,16 +19,23 @@ const segmentGroup = [
     }
 ];
 
-describe('SegmentsTree enzyme shallow', () => {
-    it('should match the snapshot', () => {
-        const component = shallow(<SegmentsTree segmentGroup={segmentGroup} segmentGroupIndex={0} />);
-
-        expect(component).toMatchSnapshot();
+describe('Testing SegmentsTree', () => {
+    let wrapper;
+    
+    beforeEach(() => {
+        wrapper = mount(
+            <AudienceBuilderContextProvider>
+                <SegmentsTree clusivity="includedSegments" segmentGroup={segmentGroup} segmentGroupIndex={0} />
+            </AudienceBuilderContextProvider>
+        );
     });
-
+    
+    it('should render 2 conditions', () => {
+        expect(wrapper.find('[operator-box="true"]').hostNodes())
+            .toHaveLength(2);
+    });
+    
     it('should not print the operator of the 1st child of the 1st parent', () => {
-        const wrapper = render(<SegmentsTree segmentGroup={segmentGroup} segmentGroupIndex={0} />);
-
         expect(wrapper.find('[operator-box="true"]').first().text())
             .toEqual('');
     });

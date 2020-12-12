@@ -1,4 +1,4 @@
-import {render, mount} from 'enzyme';
+import {mount} from 'enzyme';
 import React from "react";
 
 import {AudienceBuilderContextProvider} from '../AudienceBuilderContext';
@@ -7,7 +7,7 @@ import SegmentSelector from "./SegmentSelector";
 describe('Testing SegmentSelector', () => {
     let wrapper;
 
-    beforeAll(() => {
+    beforeEach(() => {
         wrapper = mount(
             <AudienceBuilderContextProvider>
                 <SegmentSelector clusivity={'includedSegments'} />
