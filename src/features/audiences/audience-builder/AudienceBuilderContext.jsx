@@ -1,4 +1,4 @@
-import React, {createContext, useContext} from 'react';
+import React, {createContext, useContext, useEffect, useMemo} from 'react';
 
 import useViewModel from "../../../shared/hooks/use-view-model";
 import audienceResource from "../../audiences/audience-builder/audience-resource";
@@ -14,13 +14,19 @@ export function AudienceBuilderContextProvider({children}) {
     
     const {loaded, segments, audienceWithSegments} = useAudienceBuilder();
 
-    audienceViewModel.update(audienceWithSegments);
-
-    const initialValue = {
+    const initialValue = useMemo(() => ({
         audienceViewModel,
         segments,
         loaded
-    };
+    }), [audienceViewModel, segments, loaded]);
+
+    useEffect(() => {
+        audienceViewModel.update(audienceWithSegments);
+    },[audienceWithSegments]);
+
+    if (!loaded) {
+        return null;
+    }
 
     return (
         <AudienceBuilderStateContext.Provider value={initialValue}>

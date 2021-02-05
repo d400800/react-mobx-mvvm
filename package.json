@@ -8,7 +8,9 @@
     "url": "https://github.com/d400800/react-mobx-mvvm.git"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",

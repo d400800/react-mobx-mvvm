@@ -12,6 +12,8 @@ const AudienceBuilder = observer(() => {
 
     const theme = useTheme();
 
+    console.log('hello');
+
     if (!loaded) return (
         <Box display="flex" justifyContent="center" mt={10}>
             <CircularProgress/>
